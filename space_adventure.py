@@ -269,13 +269,14 @@ def main_game():
         
         # Update
         all_sprites.update()
-        
+
         # Check bullet-enemy collisions
-        hits = pygame.sprite.groupcollide(enemies, bullets, False, True)
-        for hit in hits:
+        # Changed the first boolean from False to True to make enemies breakable
+        hits = pygame.sprite.groupcollide(enemies, bullets, True, True)
+        for enemy_hit, bullets_that_hit in hits.items(): # Iterate through the dictionary returned
             score += 10
-            # Create explosion
-            explosion = Explosion(hit.rect.center, 30)
+            # Create explosion for the destroyed enemy
+            explosion = Explosion(enemy_hit.rect.center, 30) # Use enemy_hit's center
             all_sprites.add(explosion)
             # Spawn new enemy
             new_enemy = Enemy()
@@ -286,7 +287,7 @@ def main_game():
                 powerup = Powerup()
                 all_sprites.add(powerup)
                 powerups.add(powerup)
-        
+
         # Check player-enemy collisions
         hits = pygame.sprite.spritecollide(player, enemies, True)
         for hit in hits:
