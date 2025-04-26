@@ -99,9 +99,13 @@ class Player(pygame.sprite.Sprite):
                 all_sprites.add(bullet)
                 bullets.add(bullet)
             elif self.power_level >= 2:
-                bullet1 = Bullet(self.rect.centerx, self.rect.top)
+                # Create two bullets, one from the left, one from the right
+                bullet1 = Bullet(self.rect.left + 10, self.rect.centery) # Offset left
+                bullet2 = Bullet(self.rect.right - 10, self.rect.centery) # Offset right
                 all_sprites.add(bullet1)
+                all_sprites.add(bullet2)
                 bullets.add(bullet1)
+                bullets.add(bullet2)
 
     def hide(self):
         self.hidden = True
@@ -308,10 +312,11 @@ def main_game():
                     player.shield = 100
             if hit.type == 'power':
                 player.powerup()
-        
+
+        # If game over, stop the loop
         if game_over:
-            pass
-            
+            running = False
+
         # Draw / render
         screen.fill(BLACK)
         all_sprites.draw(screen)
