@@ -307,7 +307,7 @@ def main_game():
         hits = pygame.sprite.spritecollide(player, powerups, True)
         for hit in hits:
             if hit.type == 'shield':
-                player.shield += 20
+                player.shield += 20 
                 if player.shield > 100:
                     player.shield = 100
             if hit.type == 'power':
